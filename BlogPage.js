@@ -1,12 +1,12 @@
 const DOM = React.DOM;
 
-const Image = ({ args }) => (
+const Image = ({ src, width, height, alt }) => (
   DOM.img( 
     { 
-      src: args.src, 
-      width: args.width, 
-      height: args.height, 
-      alt: args.alt 
+      src, 
+      width, 
+      height, 
+      alt 
     } 
   )
 );
@@ -17,7 +17,7 @@ const TextBox = ({ content }) => (
 
 const BlogItem = ({ post }) => (
   DOM.div(null,
-    React.createElement(Image, { args: post.imageArgs }),
+    React.createElement(Image, post.imageArgs),
     React.createElement(TextBox, { content: post.text })
   )
 );

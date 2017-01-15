@@ -1,12 +1,12 @@
 const DOM = React.DOM;
 
-const Image = ({ args }) => (
+const Image = ({ src, width, height, alt }) => (
   DOM.img( 
     { 
-      src: args.src, 
-      width: args.width, 
-      height: args.height, 
-      alt: args.alt 
+      src, 
+      width, 
+      height, 
+      alt 
     } 
   )
 );
@@ -14,7 +14,7 @@ const Image = ({ args }) => (
 ReactDOM.render(
   React.createElement(
     Image, 
-    args: { 
+    { 
       src: 'http://www.kernix.com/web/kernix/images/opensource/react.png',
       width: 40,
       height: 40,
