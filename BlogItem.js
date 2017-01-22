@@ -98,6 +98,14 @@ const BlogItem = ({ post }) => (
   )
 );
 
+BlogItem.propTypes = {
+  post: PropTypes.shape({
+    metaInfo: PropTypes.shape(MetaInfo.propTypes)
+    , imageArgs: PropTypes.shape(Image.propTypes)
+    , text: PropTypes.shape(TextBox.propTypes)
+  })
+};
+
 const posts = [
   {
     metaInfo: {
@@ -155,4 +163,4 @@ ReactDOM.render(
       )
     ),
   document.getElementById('app')
-);s
+);
