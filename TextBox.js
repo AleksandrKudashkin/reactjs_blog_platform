@@ -2,21 +2,23 @@ const { DOM, PropTypes } = React;
 
 const { bind, assign } = _;
 
-const TextBox = ({ content }) => (
-  DOM.span(null, `${content}`)
+const TextBox = ({ children }) => (
+  DOM.span(null, `${children}`)
 );
 
 TextBox.defaultProps = {
-  content: 'Default lorem ipsum dolor sit amet'
+  children: 'Default lorem ipsum dolor sit amet'
 };
 
 TextBox.propTypes = {
-  content: PropTypes.string
+  children: PropTypes.string
 };
 
 ReactDOM.render(
   React.createElement(
-    TextBox, 
-    { content: 'Lorem ipsum dolor sit amet' }),
+    TextBox
+    , {}
+    , 'Lorem ipsum dolor sit amet'
+  ),
   document.getElementById('app')
 );

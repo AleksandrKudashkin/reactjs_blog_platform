@@ -2,6 +2,18 @@ const { DOM, PropTypes } = React;
 
 const { bind, assign } = _;
 
+const TextBox = ({ children }) => (
+  DOM.span(null, `${children}`)
+);
+
+TextBox.defaultProps = {
+  children: 'Default lorem ipsum dolor sit amet'
+};
+
+TextBox.propTypes = {
+  children: PropTypes.string
+};
+
 const Image = ({ src, width, height, alt }) => (
   DOM.img( 
     { 
@@ -27,40 +39,10 @@ Image.propTypes = {
   alt: PropTypes.string
 };
 
-const TextBox = ({ content }) => (
-  DOM.span(null, `${content}`)
-);
-
-TextBox.defaultProps = {
-  content: 'Default lorem ipsum dolor sit amet'
-};
-
-TextBox.propTypes = {
-  content: PropTypes.string
-};
-
-const MetaInfo = ({ author, createdAt, updatedAt }) => (
-  DOM.p(null, 
-        `Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
-       )
-);
-
-MetaInfo.defaultProps = {
-  author: 'John Smith',
-  createdAt: '01/01/2017',
-  updatedAt: '02/01/2017'
-};
-
-MetaInfo.propTypes = {
-  author: PropTypes.string,
-  createdAt: PropTypes.string,
-  updatedAt: PropTypes.string
-}
-
 class Like extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { count: props.likes };
+    this.state = { count: props.children };
     
     this.handleClick = bind(this.handleClick, this);
   }
@@ -82,19 +64,39 @@ class Like extends React.Component {
 };
 
 Like.defaultProps = {
-  likes: 0
+  children: 0
 }
 
 Like.propTypes = {
-  likes: PropTypes.number
+  children: PropTypes.number
+}
+
+const MetaInfo = ({ id, author, createdAt, updatedAt }) => (
+  DOM.p(null, 
+        `Id: ${id} | Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
+       )
+);
+
+MetaInfo.defaultProps = {
+  author: 'John Smith',
+  createdAt: '01/01/2017',
+  updatedAt: '02/01/2017',
+  id: 0
+};
+
+MetaInfo.propTypes = {
+  author: PropTypes.string,
+  createdAt: PropTypes.string,
+  updatedAt: PropTypes.string,
+  id: PropTypes.number
 }
 
 const BlogItem = ({ post }) => (
   DOM.div(null,
     React.createElement(MetaInfo, post.metaInfo),
     React.createElement(Image, post.imageArgs),
-    React.createElement(TextBox, { content: post.text }),
-    React.createElement(Like, { likes: post.likes })
+    React.createElement(TextBox, {}, post.text),
+    React.createElement(Like, {}, post.likes)
   )
 );
 
@@ -102,7 +104,8 @@ BlogItem.propTypes = {
   post: PropTypes.shape({
     metaInfo: PropTypes.shape(MetaInfo.propTypes)
     , imageArgs: PropTypes.shape(Image.propTypes)
-    , text: PropTypes.shape(TextBox.propTypes)
+    , text: React.PropTypes.string
+    , likes: React.PropTypes.number
   })
 };
 
@@ -121,12 +124,7 @@ const BlogList = ({ posts }) => (
   )
 );
 
-ReactDOM.render(
-  React.createElement(BlogList, { posts: posts }),
-  document.getElementById('app')
-);
-
-class BlogPage extends React.Component {
+class BlogPage extends React.Component {  
   render() {
     const { posts } = this.props;
     return React.createElement(BlogList, { posts });
@@ -136,6 +134,7 @@ class BlogPage extends React.Component {
 const posts = [
   {
     metaInfo: {
+      id: 1,
       author: 'Jimmy',
       createdAt: moment('2017-01-01', 'YYYY-MM-DD').calendar(),
       updatedAt: moment('2017-01-02', 'YYYY-MM-DD').calendar()
@@ -150,6 +149,7 @@ const posts = [
   },
   {
     metaInfo: {
+      id: 2,
       author: 'Billy',
       createdAt: moment('2017-01-03', 'YYYY-MM-DD').calendar(),
       updatedAt: moment('2017-01-04', 'YYYY-MM-DD').calendar()
@@ -165,6 +165,7 @@ const posts = [
   },
   {
     metaInfo: {
+      id: 3,
       author: 'Villy',
       createdAt: moment('2017-01-05', 'YYYY-MM-DD').calendar(),
       updatedAt: moment('2017-01-06', 'YYYY-MM-DD').calendar(),

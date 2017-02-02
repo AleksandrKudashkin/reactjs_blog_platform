@@ -5,7 +5,7 @@ const { bind, assign } = _;
 class Like extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { count: props.likes };
+    this.state = { count: props.children };
     
     this.handleClick = bind(this.handleClick, this);
   }
@@ -27,11 +27,11 @@ class Like extends React.Component {
 };
 
 Like.defaultProps = {
-  likes: 0
+  children: 0
 }
 
 Like.propTypes = {
-  likes: PropTypes.number
+  children: PropTypes.number
 }
 
 ReactDOM.render(
