@@ -2,18 +2,6 @@ const { DOM, PropTypes } = React;
 
 const { bind, assign } = _;
 
-const TextBox = ({ children }) => (
-  DOM.span(null, `${children}`)
-);
-
-TextBox.defaultProps = {
-  children: 'Default lorem ipsum dolor sit amet'
-};
-
-TextBox.propTypes = {
-  children: PropTypes.string
-};
-
 const Image = ({ src, width, height, alt }) => (
   DOM.img( 
     { 
@@ -39,49 +27,28 @@ Image.propTypes = {
   alt: PropTypes.string
 };
 
-class Like extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: props.children };
-    
-    this.handleClick = bind(this.handleClick, this);
-  }
-  
-  handleClick() {
-    this.setState({ count: this.state.count + 1 })
-  }
-  
-  render() {
-    return (
-      <div>
-        {this.state.count > 0 &&
-          <p>Likes: { this.state.count }</p>
-        }
-      <button onClick={this.handleClick}>+1</button>
-      </div>
-    )
-  }
+const TextBox = ({ children }) => (
+  DOM.span(null, `${children}`)
+);
+
+TextBox.defaultProps = {
+  children: 'Default lorem ipsum dolor sit amet'
 };
 
-Like.defaultProps = {
-  children: 0
-}
+TextBox.propTypes = {
+  children: PropTypes.string
+};
 
-Like.propTypes = {
-  children: PropTypes.number
-}
-
-const MetaInfo = ({ id, author, createdAt, updatedAt }) => (
+const MetaInfo = ({ author, createdAt, updatedAt }) => (
   DOM.p(null, 
-        `Id: ${id} | Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
+        `Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
        )
 );
 
 MetaInfo.defaultProps = {
   author: 'John Smith',
   createdAt: '01/01/2017',
-  updatedAt: '02/01/2017',
-  id: 0
+  updatedAt: '02/01/2017'
 };
 
 MetaInfo.propTypes = {
@@ -91,12 +58,29 @@ MetaInfo.propTypes = {
   id: PropTypes.number
 }
 
-const BlogItem = ({ post }) => (
+const Like = ({ likes, addLike }) => (
+      <div>
+        { likes > 0 &&
+          <p>Likes: { likes }</p>
+        }
+      <button onClick={ addLike }>+1</button>
+      </div>
+);
+
+Like.defaultProps = {
+  likes: 0
+};
+
+Like.propTypes = {
+  likes: PropTypes.number
+};
+
+const BlogItem = ({ post, addLike }) => (
   DOM.div(null,
     React.createElement(MetaInfo, post.metaInfo),
     React.createElement(Image, post.imageArgs),
     React.createElement(TextBox, {}, post.text),
-    React.createElement(Like, {}, post.likes)
+    React.createElement(Like, {}, { likes: post.likes, addLike: addLike })
   )
 );
 
@@ -109,25 +93,45 @@ BlogItem.propTypes = {
   })
 };
 
-const BlogList = ({ posts }) => (
+const BlogList = ({ posts, addLike }) => (
   DOM.ul(
     null,
     _.map(
       posts,
       (post, key) => (
         DOM.li(
-          { key },
-          React.createElement(BlogItem, { post: post })
+          { key: post.metaInfo.id },
+          React.createElement(BlogItem, { 
+            post: post, 
+            addLike: addLike(post.metaInfo.id)
+          })
         )
       )
     )
   )
 );
 
-class BlogPage extends React.Component {  
+class BlogPage extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = { posts }
+    this.addLike = bind(this.addLike, this);
+  }
+  
+  addLike(itemId) {
+    let post = _.find(posts, function(o) { 
+      return o.metaInfo.id == itemId; 
+    });
+    post.likes += 1;
+    this.setState({ posts: posts });
+  }
+  
   render() {
-    const { posts } = this.props;
-    return React.createElement(BlogList, { posts });
+    const { posts } = this.state;
+    return React.createElement(BlogList, { 
+      posts: posts, 
+      addLike: this.addLike 
+    });
   }
 }
 
