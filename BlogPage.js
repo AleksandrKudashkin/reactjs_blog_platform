@@ -59,12 +59,10 @@ MetaInfo.propTypes = {
 }
 
 const Like = ({ likes, addLike }) => (
-      <div>
-        { likes > 0 &&
-          <p>Likes: { likes }</p>
-        }
+    <div>
+      <p>Likes: { likes }</p>
       <button onClick={ addLike }>+1</button>
-      </div>
+    </div>
 );
 
 Like.defaultProps = {
@@ -72,7 +70,8 @@ Like.defaultProps = {
 };
 
 Like.propTypes = {
-  likes: PropTypes.number
+  likes: PropTypes.number,
+  addLike: PropTypes.func
 };
 
 const BlogItem = ({ post, addLike }) => (
@@ -80,7 +79,10 @@ const BlogItem = ({ post, addLike }) => (
     React.createElement(MetaInfo, post.metaInfo),
     React.createElement(Image, post.imageArgs),
     React.createElement(TextBox, {}, post.text),
-    React.createElement(Like, {}, { likes: post.likes, addLike: addLike })
+    React.createElement(Like, { 
+      likes: post.likes, 
+      addLike: addLike 
+    })
   )
 );
 
@@ -90,6 +92,7 @@ BlogItem.propTypes = {
     , imageArgs: PropTypes.shape(Image.propTypes)
     , text: React.PropTypes.string
     , likes: React.PropTypes.number
+    , addLike: React.PropTypes.func
   })
 };
 
@@ -103,7 +106,7 @@ const BlogList = ({ posts, addLike }) => (
           { key: post.metaInfo.id },
           React.createElement(BlogItem, { 
             post: post, 
-            addLike: addLike(post.metaInfo.id)
+            addLike: () => addLike(post.metaInfo.id)
           })
         )
       )
