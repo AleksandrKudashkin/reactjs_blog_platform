@@ -129,12 +129,23 @@ class BlogPage extends React.Component {
     this.setState({ posts: posts });
   }
   
+  chartData() {
+    return _.map(posts, (post) => 
+      [post.text, post.likes]
+    )
+  }
+  
   render() {
     const { posts } = this.state;
-    return React.createElement(BlogList, { 
-      posts: posts, 
-      addLike: this.addLike 
-    });
+    return DOM.div(null,
+      React.createElement(BlogList, { 
+        posts: posts, 
+        addLike: this.addLike 
+      })
+      , React.createElement(PieChart, {
+        columns: this.chartData()
+      })             
+    );
   }
 }
 
@@ -152,7 +163,8 @@ const posts = [
       height: 40,
       alt: 'React logo',
     },
-    text: 'Lorem ipsum dolor sit amet'
+    text: 'Lorem ipsum dolor sit amet',
+    likes: 1
   },
   {
     metaInfo: {
@@ -185,9 +197,37 @@ const posts = [
     },
     text: 'Lorem ipsum dolor sit amet3',
     likes: 5
-  },
-
+  }
 ]
+
+class PieChart extends React.Component {  
+  componentDidMount() {
+    this.chart = c3.generate({
+      bindto: ReactDOM.findDOMNode(this.refs.pieChart),
+      data: { columns: this.props.columns 
+             , type: 'pie'
+            }
+    })   
+  }
+  
+  componentWillUnmount() {
+    this.chart.destroy();
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    this.chart.load(nextProps);
+  }
+  
+  render() {
+    return (
+      <div ref="pieChart" />
+    );
+  }
+}
+
+PieChart.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.array)
+};
 
 ReactDOM.render(
   React.createElement(BlogPage, { posts: posts }),
