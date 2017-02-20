@@ -2,18 +2,6 @@ const { DOM, PropTypes } = React;
 
 const { bind, assign } = _;
 
-const TextBox = ({ children }) => (
-  DOM.span(null, `${children}`)
-);
-
-TextBox.defaultProps = {
-  children: 'Default lorem ipsum dolor sit amet'
-};
-
-TextBox.propTypes = {
-  children: PropTypes.string
-};
-
 const Image = ({ src, width, height, alt }) => (
   DOM.img( 
     { 
@@ -39,49 +27,28 @@ Image.propTypes = {
   alt: PropTypes.string
 };
 
-class Like extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: props.children };
-    
-    this.handleClick = bind(this.handleClick, this);
-  }
-  
-  handleClick() {
-    this.setState({ count: this.state.count + 1 })
-  }
-  
-  render() {
-    return (
-      <div>
-        {this.state.count > 0 &&
-          <p>Likes: { this.state.count }</p>
-        }
-      <button onClick={this.handleClick}>+1</button>
-      </div>
-    )
-  }
+const TextBox = ({ children }) => (
+  DOM.span(null, `${children}`)
+);
+
+TextBox.defaultProps = {
+  children: 'Default lorem ipsum dolor sit amet'
 };
 
-Like.defaultProps = {
-  children: 0
-}
+TextBox.propTypes = {
+  children: PropTypes.string
+};
 
-Like.propTypes = {
-  children: PropTypes.number
-}
-
-const MetaInfo = ({ id, author, createdAt, updatedAt }) => (
+const MetaInfo = ({ author, createdAt, updatedAt }) => (
   DOM.p(null, 
-        `Id: ${id} | Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
+        `Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
        )
 );
 
 MetaInfo.defaultProps = {
   author: 'John Smith',
   createdAt: '01/01/2017',
-  updatedAt: '02/01/2017',
-  id: 0
+  updatedAt: '02/01/2017'
 };
 
 MetaInfo.propTypes = {
@@ -91,12 +58,31 @@ MetaInfo.propTypes = {
   id: PropTypes.number
 }
 
-const BlogItem = ({ post }) => (
+const Like = ({ likes, addLike }) => (
+    <div>
+      <p>Likes: { likes }</p>
+      <button onClick={ addLike }>+1</button>
+    </div>
+);
+
+Like.defaultProps = {
+  likes: 0
+};
+
+Like.propTypes = {
+  likes: PropTypes.number,
+  addLike: PropTypes.func
+};
+
+const BlogItem = ({ post, addLike }) => (
   DOM.div(null,
     React.createElement(MetaInfo, post.metaInfo),
     React.createElement(Image, post.imageArgs),
     React.createElement(TextBox, {}, post.text),
-    React.createElement(Like, {}, post.likes)
+    React.createElement(Like, { 
+      likes: post.likes, 
+      addLike: addLike 
+    })
   )
 );
 
@@ -106,28 +92,60 @@ BlogItem.propTypes = {
     , imageArgs: PropTypes.shape(Image.propTypes)
     , text: React.PropTypes.string
     , likes: React.PropTypes.number
+    , addLike: React.PropTypes.func
   })
 };
 
-const BlogList = ({ posts }) => (
+const BlogList = ({ posts, addLike }) => (
   DOM.ul(
     null,
     _.map(
       posts,
       (post, key) => (
         DOM.li(
-          { key },
-          React.createElement(BlogItem, { post: post })
+          { key: post.metaInfo.id },
+          React.createElement(BlogItem, { 
+            post: post, 
+            addLike: () => addLike(post.metaInfo.id)
+          })
         )
       )
     )
   )
 );
 
-class BlogPage extends React.Component {  
+class BlogPage extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = { posts }
+    this.addLike = bind(this.addLike, this);
+  }
+  
+  addLike(itemId) {
+    let post = _.find(posts, function(o) { 
+      return o.metaInfo.id == itemId; 
+    });
+    post.likes += 1;
+    this.setState({ posts: posts });
+  }
+  
+  chartData() {
+    return _.map(posts, (post) => 
+      [post.text, post.likes]
+    )
+  }
+  
   render() {
-    const { posts } = this.props;
-    return React.createElement(BlogList, { posts });
+    const { posts } = this.state;
+    return DOM.div(null,
+      React.createElement(BlogList, { 
+        posts: posts, 
+        addLike: this.addLike 
+      })
+      , React.createElement(PieChart, {
+        columns: this.chartData()
+      })             
+    );
   }
 }
 
@@ -145,7 +163,8 @@ const posts = [
       height: 40,
       alt: 'React logo',
     },
-    text: 'Lorem ipsum dolor sit amet'
+    text: 'Lorem ipsum dolor sit amet',
+    likes: 1
   },
   {
     metaInfo: {
@@ -178,9 +197,37 @@ const posts = [
     },
     text: 'Lorem ipsum dolor sit amet3',
     likes: 5
-  },
-
+  }
 ]
+
+class PieChart extends React.Component {  
+  componentDidMount() {
+    this.chart = c3.generate({
+      bindto: ReactDOM.findDOMNode(this.refs.pieChart),
+      data: { columns: this.props.columns 
+             , type: 'pie'
+            }
+    })   
+  }
+  
+  componentWillUnmount() {
+    this.chart.destroy();
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    this.chart.load(nextProps);
+  }
+  
+  render() {
+    return (
+      <div ref="pieChart" />
+    );
+  }
+}
+
+PieChart.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.array)
+};
 
 ReactDOM.render(
   React.createElement(BlogPage, { posts: posts }),
