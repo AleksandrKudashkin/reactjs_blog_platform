@@ -1,0 +1,48 @@
+{
+  "name": "reactjs_blog_platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleksandrKudashkin/reactjs_blog_platform.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AleksandrKudashkin/reactjs_blog_platform/issues"
+  },
+  "homepage": "https://github.com/AleksandrKudashkin/reactjs_blog_platform#readme",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "css-loader": "^0.26.4",
+    "eslint": "^3.16.1",
+    "eslint-plugin-destructuring": "^2.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.10.0",
+    "file-loader": "^0.10.1",
+    "gulp": "^3.9.1",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "semantic-ui": "^2.2.9",
+    "style-loader": "^0.13.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "c3": "^0.4.11",
+    "d3": "^4.7.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "semantic-ui-react": "^0.67.0"
+  }
+}
