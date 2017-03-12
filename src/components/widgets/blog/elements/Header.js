@@ -1,10 +1,15 @@
-import React, { PropTypes } from 'react';
+import React, { DOM, PropTypes } from 'react';
 import { Header } from 'semantic-ui-react';
 
 const HeaderItem = ({ children }) => (
-  <div>
-    <Header size='medium'> { children } </Header>
-  </div>
+  DOM.div(null,
+    React.createElement(Header,
+      {
+        size: 'medium'
+        , children
+      }
+    )
+  )
 );
 
 HeaderItem.defaultProps = {

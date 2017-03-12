@@ -3,7 +3,7 @@ import React from 'react';
 import BlogPage from 'components/BlogPage';
 
 const App = () => (
-  <BlogPage />
+  React.createElement(BlogPage)
 );
 
 export default App;

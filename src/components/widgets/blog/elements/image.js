@@ -2,7 +2,13 @@ import React, { PropTypes } from 'react';
 import { Image } from 'semantic-ui-react';
 
 const ImageItem = ({ src, width, height, alt }) => (
-  <Image src={src} width={width} height={height} alt={alt} />
+  React.createElement(Image,
+    {
+      src
+    , width
+    , height
+    , alt
+    })
 );
 
 Image.defaultProps = {

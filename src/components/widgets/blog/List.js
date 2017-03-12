@@ -9,7 +9,12 @@ import BlogItem from 'components/widgets/blog/Item';
 const BlogList = ({ posts, addLike }) => (
   React.createElement(Container,
     null,
-    <Header as='h2'>My BlogList</Header>,
+    React.createElement(Header,
+      {
+        as: 'h2'
+        , children: 'My BlogList'
+      }
+    ),
     _.map(
       posts,
       (post) => (

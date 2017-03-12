@@ -1,16 +1,18 @@
-import React, { PropTypes } from 'react';
+import React, { DOM, PropTypes } from 'react';
 
 import { Button } from 'semantic-ui-react';
 
 const Like = ({ likes, addLike }) => (
-  <div>
-    <Button
-      content='Like'
-      icon='heart'
-      label={{ as: 'a', basic: true, content: likes }}
-      onClick={ addLike }
-    />
-  </div>
+  DOM.div(null,
+    React.createElement(Button,
+      {
+        content: 'Like'
+        , icon: 'heart'
+        , label: { as: 'a', basic: true, content: likes }
+        , onClick: addLike
+      }
+    )
+  )
 );
 
 Like.defaultProps = {

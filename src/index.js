@@ -10,10 +10,9 @@ import '../semantic/dist/semantic.min.css';
 const rootEl = document.getElementById('app');
 
 ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  rootEl
+  React.createElement(AppContainer, null,
+    React.createElement(App)
+  ), rootEl
 );
 
 if (module.hot) {
@@ -21,10 +20,9 @@ if (module.hot) {
     const NextApp = require('./App').default;
 
     ReactDOM.render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
-      rootEl
+      React.createElement(AppContainer, null,
+        React.createElement(NextApp)
+      ), rootEl
     );
   });
 }
