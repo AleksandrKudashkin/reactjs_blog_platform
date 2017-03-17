@@ -1,9 +1,13 @@
 import React from 'react';
-
-import BlogPage from 'components/BlogPage';
+import { Router, browserHistory } from 'react-router';
+import routes from 'routes';
 
 const App = () => (
-  React.createElement(BlogPage)
+  React.createElement(Router,
+    {
+      history: browserHistory,
+      routes
+    })
 );
 
 export default App;
