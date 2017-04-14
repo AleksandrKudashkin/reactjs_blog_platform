@@ -1,16 +1,18 @@
 import React, { DOM } from 'react';
-import _ from 'lodash';
+import { clone, bind, map } from 'lodash';
 
 import request from 'superagent';
 import BlogList from 'components/widgets/blog/List';
 import PieChart from 'components/widgets/blog/PieChart';
 import { Grid } from 'semantic-ui-react';
 
+import { postsPath } from 'helpers/routes/posts';
+
 class BlogPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { posts: [] };
-    this.addLike = _.bind(this.addLike, this);
+    this.addLike = bind(this.addLike, this);
   }
 
   componentDidMount() {
@@ -21,14 +23,20 @@ class BlogPage extends React.Component {
     request.get(
       'http://localhost:3001',
       {},
-      (err, res) => this.setState({ posts: res.body })
+      (err, res) => {
+        const posts = res.body.map((post) => {
+          post.metaInfo.url = postsPath(post.metaInfo.id);
+          return post;
+        });
+        this.setState({ posts });
+      }
     );
   }
 
   addLike(itemId) {
     const posts = this.state.posts.map((post) => {
       if (post.metaInfo.id == itemId) {
-        let newPost = _.clone(post);
+        const newPost = clone(post);
         newPost.likes += 1;
         return newPost;
       } else {
@@ -40,7 +48,7 @@ class BlogPage extends React.Component {
   }
 
   chartData() {
-    return _.map(this.state.posts, (post) =>
+    return map(this.state.posts, (post) =>
       [post.header, post.likes]
     );
   }
@@ -58,7 +66,7 @@ class BlogPage extends React.Component {
         ),
         React.createElement(Grid.Column, { width: 6 }
           , React.createElement(PieChart, {
-              columns: this.chartData()
+            columns: this.chartData()
           })
         )
       )

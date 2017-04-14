@@ -1,4 +1,4 @@
-import React, { DOM, PropTypes } from 'react';
+import React, { DOM } from 'react';
 import { Container, Header } from 'semantic-ui-react';
 
 const AboutPage = () => (

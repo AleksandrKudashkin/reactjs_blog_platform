@@ -7,13 +7,11 @@ import TextBox from 'components/widgets/blog/elements/TextBox';
 import Like from 'components/widgets/blog/elements/Like';
 import Link from 'components/elements/Link';
 
-import { postsPath } from 'helpers/routes/posts';
-
 const BlogItem = ({ post, addLike }) => (
   DOM.div(null,
     React.createElement(HeaderItem, {},
       React.createElement(Link, {
-        to: postsPath(post.metaInfo.id)
+        to: post.metaInfo.url
       },
       post.header)
     ),

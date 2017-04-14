@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Container, Header, Segment } from 'semantic-ui-react';
-import _ from 'lodash';
+import { map } from 'lodash';
 
 import MetaInfo from 'components/widgets/blog/elements/MetaInfo';
 import ImageItem from 'components/widgets/blog/elements/Image';
@@ -15,7 +15,7 @@ const BlogList = ({ posts, addLike }) => (
         , children: 'My BlogList'
       }
     ),
-    _.map(
+    map(
       posts,
       (post) => (
         React.createElement(Segment,
@@ -38,6 +38,7 @@ BlogList.propTypes = {
     , text: React.PropTypes.string
     , likes: React.PropTypes.number
     , addLike: React.PropTypes.func
+    , url: React.PropTypes.string
   })
   ),
   addLike: React.PropTypes.func
