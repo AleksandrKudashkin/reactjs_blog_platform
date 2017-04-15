@@ -17,7 +17,7 @@ HeaderItem.defaultProps = {
 };
 
 HeaderItem.propTypes = {
-  children: PropTypes.string
+  children: PropTypes.object
 };
 
 export default HeaderItem;

@@ -5,10 +5,16 @@ import ImageItem from 'components/widgets/blog/elements/Image';
 import HeaderItem from 'components/widgets/blog/elements/Header';
 import TextBox from 'components/widgets/blog/elements/TextBox';
 import Like from 'components/widgets/blog/elements/Like';
+import Link from 'components/elements/Link';
 
 const BlogItem = ({ post, addLike }) => (
   DOM.div(null,
-    React.createElement(HeaderItem, {}, post.header),
+    React.createElement(HeaderItem, {},
+      React.createElement(Link, {
+        to: post.metaInfo.url
+      },
+      post.header)
+    ),
     React.createElement(ImageItem, post.imageArgs),
     React.createElement(TextBox, {}, post.text),
     React.createElement(MetaInfo, post.metaInfo),
@@ -26,7 +32,6 @@ BlogItem.propTypes = {
     , header: React.PropTypes.string
     , text: React.PropTypes.string
     , likes: React.PropTypes.number
-    , addLike: React.PropTypes.func
   }),
   addLike: React.PropTypes.func
 };
