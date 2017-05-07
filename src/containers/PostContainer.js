@@ -7,4 +7,10 @@ const stateToProps = (state) => ({
   error: state.post.error
 });
 
+// const mapDispatchToProps = (dispatch) => ({
+//   addLike: (id) => {
+//     dispatch(addLike(id));
+//   }
+// });
+
 export default connect(stateToProps)(Post);

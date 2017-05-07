@@ -1,4 +1,5 @@
 import { assign } from 'lodash/object';
+import { clone } from 'lodash/lang';
 import * as types from 'constants/actionTypes/PostsActionTypes';
 import { postsPath } from 'helpers/routes/posts.js';
 
@@ -20,6 +21,19 @@ export default function(state = initialState, action) {
           action.response.map((post) => {
             post.metaInfo.url = postsPath(post.metaInfo.id);
             return post;
+          })
+      });
+    case types.ADD_LIKE_SUCCESS:
+      return assign({}, state, {
+        entries:
+          state.entries.map((post) => {
+            if (post.metaInfo.id == action.id) {
+              const newPost = clone(post);
+              newPost.likes += 1;
+              return newPost;
+            } else {
+              return post;
+            }
           })
       });
     default:
