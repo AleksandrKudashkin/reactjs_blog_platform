@@ -2,12 +2,15 @@ import React, { DOM, PropTypes } from 'react';
 import { Item } from 'semantic-ui-react';
 import BlogItem from 'components/widgets/blog/Item';
 
-const Post = ({ post }) => (
+const Post = ({ post, addLike }) => (
   DOM.div(null,
     React.createElement(Item.Group, {},
       React.createElement(Item, {},
         post && React.createElement(BlogItem,
-          { post }
+          {
+            post,
+            addLike: () => addLike(post.metaInfo.id)
+          }
         )
       )
     )
@@ -15,7 +18,8 @@ const Post = ({ post }) => (
 );
 
 Post.propTypes = {
-  post: PropTypes.object
+  post: PropTypes.object,
+  addLike: React.PropTypes.func
 };
 
 export default Post;

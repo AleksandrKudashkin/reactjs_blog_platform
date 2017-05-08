@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
             return post;
           })
       });
-    case types.ADD_LIKE_SUCCESS:
+    case types.ADD_POSTS_LIKE:
       return assign({}, state, {
         entries:
           state.entries.map((post) => {

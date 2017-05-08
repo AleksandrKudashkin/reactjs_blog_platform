@@ -1,6 +1,6 @@
 import BlogList from 'components/widgets/blog/List';
 import { connect } from 'react-redux';
-import addLike from 'actions/Like';
+import addPostsLike from 'actions/PostsLike';
 
 const stateToProps = (state) => ({
   posts: state.posts.entries,
@@ -10,7 +10,7 @@ const stateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addLike: (id) => {
-    dispatch(addLike(id));
+    dispatch(addPostsLike(id));
   }
 });
 
