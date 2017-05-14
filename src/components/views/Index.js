@@ -1,6 +1,6 @@
 import BlogList from 'components/widgets/blog/List';
 import React, { DOM } from 'react';
-import Helmet from 'react-helmet';
+import Meta from 'components/elements/Meta';
 
 const Index = ({ posts, addLike, startSearch }) => (
   DOM.div(null,
@@ -9,9 +9,7 @@ const Index = ({ posts, addLike, startSearch }) => (
       addLike,
       startSearch
     }),
-    React.createElement(Helmet, {
-      title: 'Posts index'
-    })
+    React.createElement(Meta, { title: 'Posts list' })
   )
 );
 

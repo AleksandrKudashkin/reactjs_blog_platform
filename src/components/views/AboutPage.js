@@ -1,6 +1,6 @@
 import React, { DOM } from 'react';
 import { Container, Header } from 'semantic-ui-react';
-import Helmet from 'react-helmet';
+import Meta from 'components/elements/Meta';
 
 const AboutPage = () => (
   React.createElement(Container, {},
@@ -14,7 +14,7 @@ const AboutPage = () => (
       gentrify etsy enamel pin sustainable. Chicharrones cronut fashion axe hell of distillery
       hashtag. Bushwick hell of beard ennui cred church-key.`
     ),
-    React.createElement(Helmet, {
+    React.createElement(Meta, {
       title: 'About this blog'
     })
   )

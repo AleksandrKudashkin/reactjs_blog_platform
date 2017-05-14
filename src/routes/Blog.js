@@ -28,6 +28,7 @@ const PostRoute = {
   path: postsPath(),
   component: PostContainer,
   prepareData: (store, query, params) => {
+    if (initialLoad()) return;
     return store.dispatch(fetchPost(params.id));
   }
 };

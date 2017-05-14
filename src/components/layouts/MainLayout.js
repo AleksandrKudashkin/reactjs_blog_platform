@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Helmet from 'react-helmet';
 
 import {
   Button,
@@ -19,10 +18,7 @@ const MainLayout = ({ children }) => (
     React.createElement(GoBackButton),
     React.createElement(Divider, { hidden: true }),
     children,
-    React.createElement(Footer),
-    React.createElement(Helmet, {
-      defaultTitle: 'ReactJS Blog'
-    })
+    React.createElement(Footer)
   )
 );
 
