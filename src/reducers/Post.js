@@ -1,5 +1,4 @@
 import { assign } from 'lodash/object';
-import { clone } from 'lodash/lang';
 import * as types from 'constants/actionTypes/PostActionTypes';
 
 const initialState =  {
@@ -7,13 +6,6 @@ const initialState =  {
   error: false,
   entry: null
 };
-
-function addLikeToClone(object, id) {
-  const newObj = clone(object);
-  if (newObj.id == id)
-    newObj.meta.likes += 1;
-  return newObj;
-}
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -25,10 +17,14 @@ export default function(state = initialState, action) {
       return assign({}, initialState,
         { entry: action.response.post }
       );
-    case types.ADD_POST_LIKE:
-      return assign({}, state, {
-        entry: addLikeToClone(state.entry, action.id)
-      });
+    case types.ADD_POST_LIKE_REQUEST:
+      return assign({}, state, { isFetching: true });
+    case types.ADD_POST_LIKE_ERROR:
+      return assign({}, state, { error: true });
+    case types.ADD_POST_LIKE_SUCCESS:
+      return assign({}, state,
+        { entry: action.response.post }
+      );
     default:
       return state;
   }

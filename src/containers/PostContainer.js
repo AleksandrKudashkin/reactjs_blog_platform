@@ -1,6 +1,6 @@
 import Post from 'components/PostPage';
 import { connect } from 'react-redux';
-import addPostLike from 'actions/PostLike';
+import { addPostLike } from 'actions/Post';
 
 const stateToProps = (state) => ({
   post: state.post.entry,

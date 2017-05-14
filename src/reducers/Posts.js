@@ -1,5 +1,4 @@
 import { assign } from 'lodash/object';
-import { clone } from 'lodash/lang';
 import * as types from 'constants/actionTypes/PostsActionTypes';
 import { postsPath } from 'helpers/routes/posts.js';
 
@@ -23,14 +22,16 @@ export default function(state = initialState, action) {
             return post;
           })
       });
-    case types.ADD_POSTS_LIKE:
+    case types.ADD_POSTS_LIKE_REQUEST:
+      return assign({}, state, { isFetching: true });
+    case types.ADD_POSTS_LIKE_ERROR:
+      return assign({}, state, { error: true });
+    case types.ADD_POSTS_LIKE_SUCCESS:
       return assign({}, state, {
         entries:
           state.entries.map((post) => {
-            if (post.id == action.id) {
-              const newPost = clone(post);
-              newPost.meta.likes += 1;
-              return newPost;
+            if (post.id == action.response.post.id) {
+              return action.response.post;
             } else {
               return post;
             }

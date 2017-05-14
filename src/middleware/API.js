@@ -10,7 +10,7 @@ function APICall({ endpoint, method, query, payload }){
     if (query)
       r.query(stringify(query));
 
-    if (payload && method == 'POST')
+    if (payload)
       r = r.send(payload);
 
     r.end((error, data) => (

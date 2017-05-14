@@ -15,3 +15,16 @@ export function fetchPosts() {
     }
   };
 }
+
+export const addPostLike = (id) => ({
+  [API_CALL]: {
+    endpoint: `/posts/${id}/like`,
+    method: 'PATCH',
+    query: {},
+    types: [
+      types.ADD_POSTS_LIKE_REQUEST,
+      types.ADD_POSTS_LIKE_SUCCESS,
+      types.ADD_POSTS_LIKE_ERROR
+    ]
+  }
+});
