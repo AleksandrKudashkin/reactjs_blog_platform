@@ -1,5 +1,8 @@
 import MainLayout from 'components/layouts/MainLayout';
 import AboutPage from 'components/AboutPage';
+
+import initialLoad from 'helpers/initialLoad';
+
 import { postsPath } from 'helpers/routes/posts';
 import { fetchPosts } from 'actions/Posts';
 import { fetchPost } from 'actions/Post';
@@ -11,7 +14,8 @@ const Index = {
   path: '/',
   component: PostsContainer,
   prepareData: (store) => {
-    store.dispatch(fetchPosts());
+    if (initialLoad()) return;
+    return store.dispatch(fetchPosts());
   }
 };
 
@@ -24,7 +28,7 @@ const PostRoute = {
   path: postsPath(),
   component: PostContainer,
   prepareData: (store, query, params) => {
-    store.dispatch(fetchPost(params.id));
+    return store.dispatch(fetchPost(params.id));
   }
 };
 
