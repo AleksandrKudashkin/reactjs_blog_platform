@@ -1,4 +1,4 @@
-import BlogList from 'components/widgets/blog/List';
+import Index from 'components/views/Index';
 import { connect } from 'react-redux';
 import { addPostLike, startSearch } from 'actions/Posts';
 
@@ -19,4 +19,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(stateToProps, mapDispatchToProps)(BlogList);
+export default connect(stateToProps, mapDispatchToProps)(Index);

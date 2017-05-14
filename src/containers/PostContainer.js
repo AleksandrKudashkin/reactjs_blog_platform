@@ -1,4 +1,4 @@
-import Post from 'components/PostPage';
+import Post from 'components/views/PostPage';
 import { connect } from 'react-redux';
 import { addPostLike } from 'actions/Post';
 

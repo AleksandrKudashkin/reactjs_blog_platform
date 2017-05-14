@@ -1,5 +1,5 @@
 import MainLayout from 'components/layouts/MainLayout';
-import AboutPage from 'components/AboutPage';
+import AboutPage from 'components/views/AboutPage';
 
 import initialLoad from 'helpers/initialLoad';
 
