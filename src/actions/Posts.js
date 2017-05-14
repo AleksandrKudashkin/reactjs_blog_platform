@@ -1,28 +1,46 @@
-import request from 'superagent';
-import { API_ROOT } from 'constants/API';
 import * as types from 'constants/actionTypes/PostsActionTypes';
-
-const requestPosts = () => ({
-  type: types.FETCH_POSTS_REQUEST
-});
-
-const receivePosts = (response) => ({
-  type: types.FETCH_POSTS_SUCCESS,
-  response
-});
-
-const errorPosts = () => ({
-  type: types.FETCH_POSTS_ERROR
-});
+import { API_CALL } from 'middleware/API';
 
 export function fetchPosts() {
-  return (dispatch) => {
-    dispatch(requestPosts());
-
-    return request
-      .get(`${API_ROOT}/`)
-      .end((err, response) => {
-        err ? dispatch(errorPosts()) : dispatch(receivePosts(response.body));
-      });
+  return {
+    [API_CALL]: {
+      endpoint: '/posts',
+      method: 'GET',
+      query: {},
+      types: [
+        types.FETCH_POSTS_REQUEST,
+        types.FETCH_POSTS_SUCCESS,
+        types.FETCH_POSTS_ERROR
+      ]
+    }
   };
 }
+
+export const addPostLike = (id) => ({
+  [API_CALL]: {
+    endpoint: `/posts/${id}/like`,
+    method: 'PATCH',
+    query: {},
+    types: [
+      types.ADD_POSTS_LIKE_REQUEST,
+      types.ADD_POSTS_LIKE_SUCCESS,
+      types.ADD_POSTS_LIKE_ERROR
+    ]
+  }
+});
+
+export const startSearch = (searchString) => ({
+  [API_CALL]: {
+    endpoint: '/posts',
+    method: 'GET',
+    query: {
+      q: {
+        title_cont: searchString
+      }},
+    types: [
+      types.SEARCH_POSTS_LIKE_REQUEST,
+      types.SEARCH_POSTS_LIKE_SUCCESS,
+      types.SEARCH_POSTS_LIKE_ERROR
+    ]
+  }
+});

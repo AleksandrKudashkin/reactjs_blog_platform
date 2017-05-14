@@ -6,11 +6,10 @@ import {
   Header,
   Divider,
   Container,
-  Grid
+  Grid,
 } from 'semantic-ui-react';
 
 import Link from 'components/elements/Link';
-
 import history from 'helpers/history';
 
 const MainLayout = ({ children }) => (
