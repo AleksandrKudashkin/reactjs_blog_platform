@@ -11,15 +11,15 @@ const BlogItem = ({ post, addLike }) => (
   DOM.div(null,
     React.createElement(HeaderItem, {},
       React.createElement(Link, {
-        to: post.metaInfo.url
+        to: post.meta.url
       },
-      post.header)
+      post.title)
     ),
-    React.createElement(ImageItem, post.imageArgs),
-    React.createElement(TextBox, {}, post.text),
-    React.createElement(MetaInfo, post.metaInfo),
+    React.createElement(ImageItem, post.image),
+    React.createElement(TextBox, {}, post.description),
+    React.createElement(MetaInfo, post.meta),
     React.createElement(Like, {
-      likes: post.likes,
+      likes: post.meta.likes,
       addLike
     })
   )
@@ -27,10 +27,10 @@ const BlogItem = ({ post, addLike }) => (
 
 BlogItem.propTypes = {
   post: PropTypes.shape({
-    metaInfo: PropTypes.shape(MetaInfo.propTypes)
-    , imageArgs: PropTypes.shape(ImageItem.propTypes)
-    , header: React.PropTypes.string
-    , text: React.PropTypes.string
+    meta: PropTypes.shape(MetaInfo.propTypes)
+    , image: PropTypes.shape(ImageItem.propTypes)
+    , title: React.PropTypes.string
+    , description: React.PropTypes.string
     , likes: React.PropTypes.number
   }),
   addLike: React.PropTypes.func

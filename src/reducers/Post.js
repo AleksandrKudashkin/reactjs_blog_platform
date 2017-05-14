@@ -10,8 +10,8 @@ const initialState =  {
 
 function addLikeToClone(object, id) {
   const newObj = clone(object);
-  if (newObj.metaInfo.id == id)
-    newObj.likes += 1;
+  if (newObj.id == id)
+    newObj.meta.likes += 1;
   return newObj;
 }
 
@@ -22,7 +22,9 @@ export default function(state = initialState, action) {
     case types.FETCH_POST_ERROR:
       return assign({}, initialState, { error: true });
     case types.FETCH_POST_SUCCESS:
-      return assign({}, initialState, { entry: action.response });
+      return assign({}, initialState,
+        { entry: action.response.post }
+      );
     case types.ADD_POST_LIKE:
       return assign({}, state, {
         entry: addLikeToClone(state.entry, action.id)

@@ -1,22 +1,20 @@
 import { PropTypes, DOM } from 'react';
+import { formatDate } from 'helpers/formatDate';
 
-const MetaInfo = ({ author, createdAt, updatedAt }) => (
+const MetaInfo = ({ author, createdAt }) => (
   DOM.p(null,
-        `Author: ${author} | Created: ${createdAt} | Last Update: ${updatedAt}`
+        `Author: ${author} | Created: ${formatDate(createdAt)}`
        )
 );
 
 MetaInfo.defaultProps = {
   author: 'John Smith',
   createdAt: '01/01/2017',
-  updatedAt: '02/01/2017'
 };
 
 MetaInfo.propTypes = {
   author: PropTypes.string,
   createdAt: PropTypes.string,
-  updatedAt: PropTypes.string,
-  id: PropTypes.number
 };
 
 export default MetaInfo;

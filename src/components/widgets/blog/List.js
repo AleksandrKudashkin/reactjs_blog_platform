@@ -23,10 +23,10 @@ const BlogList = ({ posts, addLike }) => (
             posts,
             (post) => (
               React.createElement(Segment,
-                { key: post.metaInfo.id },
+                { key: post.id },
                 React.createElement(BlogItem, {
                   post,
-                  addLike: () => addLike(post.metaInfo.id)
+                  addLike: () => addLike(post.id)
                 })
               )
             )
@@ -35,7 +35,7 @@ const BlogList = ({ posts, addLike }) => (
       ),
       React.createElement(Grid.Column, { width: 6 }
         , React.createElement(PieChart
-            , { columns: map(posts, (post) => ([post.metaInfo.id, post.likes]))}
+            , { columns: map(posts, (post) => ([post.id, post.meta.likes]))}
           )
       )
     )

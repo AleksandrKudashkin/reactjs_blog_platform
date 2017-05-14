@@ -18,8 +18,8 @@ export default function(state = initialState, action) {
     case types.FETCH_POSTS_SUCCESS:
       return assign({}, initialState, {
         entries:
-          action.response.map((post) => {
-            post.metaInfo.url = postsPath(post.metaInfo.id);
+          action.response.posts.map((post) => {
+            post.meta.url = postsPath(post.id);
             return post;
           })
       });
@@ -27,9 +27,9 @@ export default function(state = initialState, action) {
       return assign({}, state, {
         entries:
           state.entries.map((post) => {
-            if (post.metaInfo.id == action.id) {
+            if (post.id == action.id) {
               const newPost = clone(post);
-              newPost.likes += 1;
+              newPost.meta.likes += 1;
               return newPost;
             } else {
               return post;

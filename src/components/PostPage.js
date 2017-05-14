@@ -9,7 +9,7 @@ const Post = ({ post, addLike }) => (
         post && React.createElement(BlogItem,
           {
             post,
-            addLike: () => addLike(post.metaInfo.id)
+            addLike: () => addLike(post.id)
           }
         )
       )
