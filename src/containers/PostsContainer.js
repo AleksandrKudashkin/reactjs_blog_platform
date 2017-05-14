@@ -1,6 +1,6 @@
 import BlogList from 'components/widgets/blog/List';
 import { connect } from 'react-redux';
-import { addPostLike } from 'actions/Posts';
+import { addPostLike, startSearch } from 'actions/Posts';
 
 const stateToProps = (state) => ({
   posts: state.posts.entries,
@@ -9,6 +9,11 @@ const stateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  startSearch: (searchString) => {
+    if (searchString) {
+      dispatch(startSearch(searchString));
+    }
+  },
   addLike: (id) => {
     dispatch(addPostLike(id));
   }

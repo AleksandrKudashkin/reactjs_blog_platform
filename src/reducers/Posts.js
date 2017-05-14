@@ -11,7 +11,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_POSTS_REQUEST:
-      return assign({}, initialState, { isFetching: true});
+      return assign({}, initialState, { isFetching: true });
     case types.FETCH_POSTS_ERROR:
       return assign({}, initialState, { error: true });
     case types.FETCH_POSTS_SUCCESS:
@@ -36,6 +36,17 @@ export default function(state = initialState, action) {
               return post;
             }
           })
+      });
+    case types.SEARCH_POSTS_LIKE_REQUEST:
+      return assign({}, state, { isFetching: true });
+    case types.SEARCH_POSTS_LIKE_ERROR:
+      return assign({}, state, { error: true });
+    case types.SEARCH_POSTS_LIKE_SUCCESS:
+      return assign({}, state, {
+        entries: action.response.posts.map((post) => {
+          post.meta.url = postsPath(post.id);
+          return post;
+        })
       });
     default:
       return state;

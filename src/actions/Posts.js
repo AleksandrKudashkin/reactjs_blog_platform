@@ -28,3 +28,19 @@ export const addPostLike = (id) => ({
     ]
   }
 });
+
+export const startSearch = (searchString) => ({
+  [API_CALL]: {
+    endpoint: '/posts',
+    method: 'GET',
+    query: {
+      q: {
+        title_cont: searchString
+      }},
+    types: [
+      types.SEARCH_POSTS_LIKE_REQUEST,
+      types.SEARCH_POSTS_LIKE_SUCCESS,
+      types.SEARCH_POSTS_LIKE_ERROR
+    ]
+  }
+});
