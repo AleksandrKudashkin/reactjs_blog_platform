@@ -1,5 +1,6 @@
 import React, { DOM } from 'react';
 import { Container, Header } from 'semantic-ui-react';
+import Meta from 'components/elements/Meta';
 
 const AboutPage = () => (
   React.createElement(Container, {},
@@ -12,7 +13,10 @@ const AboutPage = () => (
       cleanse hoodie. Meggings beard activated charcoal, offal four loko tote bag synth hammock
       gentrify etsy enamel pin sustainable. Chicharrones cronut fashion axe hell of distillery
       hashtag. Bushwick hell of beard ennui cred church-key.`
-    )
+    ),
+    React.createElement(Meta, {
+      title: 'About this blog'
+    })
   )
 );
 

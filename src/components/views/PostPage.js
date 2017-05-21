@@ -1,6 +1,7 @@
 import React, { DOM, PropTypes } from 'react';
 import { Item } from 'semantic-ui-react';
 import BlogItem from 'components/widgets/blog/Item';
+import Meta from 'components/elements/Meta';
 
 const Post = ({ post, addLike }) => (
   DOM.div(null,
@@ -13,7 +14,10 @@ const Post = ({ post, addLike }) => (
           }
         )
       )
-    )
+    ),
+    post && React.createElement(Meta, {
+      title: post.title
+    })
   )
 );
 
